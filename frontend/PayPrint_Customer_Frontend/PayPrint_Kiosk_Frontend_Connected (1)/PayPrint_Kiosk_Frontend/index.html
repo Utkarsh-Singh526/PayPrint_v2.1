@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b6b57">
+  <title>PayPrint | Kiosk Display</title>
+  <link rel="stylesheet" href="css/kiosk.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+  <script src="js/config.js" defer></script>
+  <script src="js/kiosk.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="PayPrint home"><span class="brand-mark">P</span><span>PayPrint<small>SELF-SERVICE PRINTING</small></span></a>
+    <div class="top-status"><span class="live-dot"></span><span id="connectionLabel">Kiosk display</span><span class="divider"></span><span id="clock">--:--</span></div>
+  </header>
+
+  <main class="screen">
+    <section class="qr-panel panel">
+      <div class="panel-head">
+        <div><p class="eyebrow">SCAN TO START</p><h1>Print in 3 simple steps.</h1><p class="subhead">Scan this QR code with your phone. Upload your PDF, choose settings and pay securely.</p></div>
+        <span class="pill"><span class="live-dot"></span> Ready to print</span>
+      </div>
+      <div class="qr-stage">
+        <div class="qr-frame"><div id="qrcode" aria-label="QR code to open PayPrint customer upload page"></div></div>
+        <div class="scan-copy"><strong>Open your phone camera</strong><span>Point it at the QR code and tap the link that appears.</span></div>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="step-num">01</span><div><b>Scan & upload</b><small>Choose your PDF</small></div></div>
+        <div class="step"><span class="step-num">02</span><div><b>Set print options</b><small>Pages, copies & paper</small></div></div>
+        <div class="step"><span class="step-num">03</span><div><b>Pay & collect</b><small>Secure UPI payment</small></div></div>
+      </div>
+      <div class="privacy"><span class="privacy-icon">✓</span><span><b>Your privacy matters.</b> Uploads are linked to your session. Never leave sensitive documents on a shared screen.</span></div>
+      <div id="qrError" class="message hidden" role="status"></div>
+    </section>
+
+    <section class="right-panel">
+      <section class="panel billing-panel">
+        <div class="section-title"><div><p class="eyebrow">LIVE OVERVIEW</p><h2>Billing</h2></div><span class="soft-icon">₹</span></div>
+        <div class="metric-grid">
+          <div class="metric"><span>Paid today</span><strong id="paidToday">—</strong><small>Successful payments</small></div>
+          <div class="metric"><span>Pages printed</span><strong id="pagesToday">—</strong><small>Today's total</small></div>
+        </div>
+        <div class="billing-foot"><span class="status-dot amber"></span><span id="billingNote">Billing summary integration pending</span></div>
+      </section>
+
+      <section class="panel queue-panel">
+        <div class="section-title"><div><p class="eyebrow">PRINT ACTIVITY</p><h2>Queue</h2></div><span class="queue-count" id="queueCount">0 jobs</span></div>
+        <div class="queue-stats">
+          <div><span class="mini-dot printing"></span><b id="printingCount">0</b><small>Printing</small></div>
+          <div><span class="mini-dot waiting"></span><b id="waitingCount">0</b><small>Waiting</small></div>
+          <div><span class="mini-dot done"></span><b id="completedCount">0</b><small>Completed</small></div>
+        </div>
+        <div class="queue-list" id="queueList">
+          <div class="empty-queue"><span class="empty-icon">▤</span><b>No jobs to display yet</b><small>Paid print jobs will appear here when the queue API is connected.</small></div>
+        </div>
+        <div class="queue-footer"><span class="live-dot"></span><span id="queueNote">Waiting for queue integration</span><span class="spacer"></span><span id="lastUpdated">Not updated</span></div>
+      </section>
+    </section>
+  </main>
+  <footer><span>© PayPrint</span><span>Fast · Simple · Secure</span><span id="kioskLabel">Kiosk ID: not set</span></footer>
+</body>
+</html>

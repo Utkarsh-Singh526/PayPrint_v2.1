@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b6e69">
+  <title>PayPrint | Admin Workspace</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="dashboard-page">
+  <div class="mobile-scrim" id="mobileScrim"></div>
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="dashboard.html"><span class="brand-mark">P</span><span>PayPrint</span></a>
+    <div class="workspace-label" data-i18n="workspace">WORKSPACE</div>
+    <nav class="nav-list" aria-label="Main navigation">
+      <button class="nav-link active" data-view="overview"><span class="nav-icon">◫</span><span data-i18n="overview">Overview</span></button>
+      <button class="nav-link super-only" data-view="admins"><span class="nav-icon">♙</span><span data-i18n="admins">Admins</span><span class="nav-count" id="adminNavCount">—</span></button>
+      <button class="nav-link super-only" data-view="kiosks"><span class="nav-icon">▣</span><span data-i18n="kiosks">Kiosks</span></button>
+      <button class="nav-link super-only" data-view="assignments"><span class="nav-icon">⛓</span><span data-i18n="assignments">Assignments</span></button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="sidebar-help"><span class="help-mark">?</span><div><strong data-i18n="needHelp">Need help?</strong><small data-i18n="helpCaption">Use the voice assistant</small></div><button id="helpSpeak" class="mini-icon" title="Read help aloud">◖</button></div>
+      <div class="admin-identity"><div class="avatar" id="avatar">PP</div><div class="identity-copy"><strong id="adminName">Administrator</strong><small id="adminEmail">Loading profile…</small><span class="role-chip" id="roleChip">ADMIN</span></div></div>
+      <button id="logoutButton" class="logout-button"><span>↪</span><span data-i18n="signOut">Sign out</span></button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-title-wrap"><button class="mobile-menu icon-button" id="mobileMenu" aria-label="Open menu">☰</button><div><p class="eyebrow" data-i18n="controlCenter">PAYPRINT CONTROL CENTER</p><h1 id="pageTitle">Overview</h1><p id="pageSubtitle" class="muted">Your print network at a glance.</p></div></div>
+      <div class="top-actions">
+        <span class="connection-pill"><span class="status-dot"></span><span data-i18n="connected">Workspace</span></span>
+        <button id="voiceButton" class="secondary-button" type="button"><span>◖</span><span data-i18n="voiceAssistant">Voice assistant</span></button>
+        <button id="langButton" class="secondary-button" type="button">हिन्दी</button>
+        <button id="refreshButton" class="secondary-button" type="button"><span>↻</span><span data-i18n="refresh">Refresh</span></button>
+      </div>
+    </header>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <div id="pageError" class="inline-alert error-message" role="alert"></div>
+    <div id="loading" class="loading-card"><span class="spinner"></span><span data-i18n="loading">Loading your workspace…</span></div>
+
+    <section id="view-overview" class="view-section" hidden>
+      <div class="welcome-banner">
+        <div><span class="welcome-kicker" data-i18n="welcome">WELCOME TO PAYPRINT</span><h2 id="welcomeTitle">Your operations, in one place.</h2><p id="welcomeText">Monitor your printing network and keep your kiosks organized.</p></div>
+        <div class="banner-art" aria-hidden="true"><div class="banner-paper"><span></span><i></i><i></i><i></i><b>P</b></div><span class="banner-ring ring-a"></span><span class="banner-ring ring-b"></span></div>
+      </div>
+      <div class="section-heading"><div><h2 data-i18n="businessSummary">Business summary</h2><p class="muted" data-i18n="summaryCaption">Live information from your PayPrint backend.</p></div><span id="updatedAt" class="updated-label"></span></div>
+      <div id="superMetrics" class="metrics-grid">
+        <article class="metric-card"><div class="metric-label"><span data-i18n="totalJobs">Total print jobs</span><span class="metric-icon teal">▤</span></div><div id="totalJobs" class="metric-value">—</div><div id="jobsToday" class="metric-foot">—</div></article>
+        <article class="metric-card"><div class="metric-label"><span data-i18n="paidRevenue">Paid revenue</span><span class="metric-icon violet">₹</span></div><div id="totalRevenue" class="metric-value">—</div><div id="revenueToday" class="metric-foot">—</div></article>
+        <article class="metric-card"><div class="metric-label"><span data-i18n="paidPayments">Paid payments</span><span class="metric-icon green">✓</span></div><div id="paidPayments" class="metric-value">—</div><div class="metric-foot" data-i18n="confirmedRecords">Confirmed paid records</div></article>
+        <article class="metric-card"><div class="metric-label"><span data-i18n="totalUsers">Total users</span><span class="metric-icon amber">♙</span></div><div id="totalUsers" class="metric-value">—</div><div class="metric-foot" data-i18n="registeredAccounts">Registered accounts</div></article>
+      </div>
+      <div id="regularWelcome" class="regular-welcome" hidden><div class="regular-icon">▣</div><div><h3 data-i18n="adminWorkspaceTitle">Administrator workspace</h3><p data-i18n="adminWorkspaceText">Your access is limited to kiosks assigned to your account. Super Admin controls are hidden.</p><p id="regularScopeNote" class="muted">Use your assigned kiosk's authorized operations.</p></div></div>
+      <div id="superOperations">
+        <div class="section-heading lower-heading"><div><h2 data-i18n="printOperations">Print operations</h2><p class="muted" data-i18n="operationsCaption">Current job statuses from the database.</p></div></div>
+        <div class="metrics-grid operations-grid">
+          <article class="metric-card compact"><div class="metric-label" data-i18n="pending">Pending</div><div id="pendingJobs" class="metric-value">—</div></article>
+          <article class="metric-card compact"><div class="metric-label" data-i18n="queued">Queued</div><div id="queuedJobs" class="metric-value">—</div></article>
+          <article class="metric-card compact"><div class="metric-label" data-i18n="printing">Printing</div><div id="printingJobs" class="metric-value">—</div></article>
+          <article class="metric-card compact"><div class="metric-label" data-i18n="completed">Completed</div><div id="completedJobs" class="metric-value">—</div></article>
+          <article class="metric-card compact"><div class="metric-label" data-i18n="failed">Failed</div><div id="failedJobs" class="metric-value">—</div></article>
+        </div>
+        <div class="lower-grid">
+          <section class="panel"><div class="panel-heading"><div><h2 data-i18n="jobBreakdown">Job status breakdown</h2><p class="muted" data-i18n="breakdownCaption">Distribution by recorded status.</p></div></div><div id="statusBreakdown" class="status-breakdown"></div></section>
+          <section class="panel"><div class="panel-heading"><div><h2 data-i18n="kioskNetwork">Kiosk network</h2><p class="muted" data-i18n="kioskNetworkCaption">Heartbeat-based online status.</p></div></div><div class="kiosk-numbers"><div><span data-i18n="totalKiosks">Total kiosks</span><strong id="totalKiosks">—</strong></div><div><span data-i18n="activeKiosks">Active kiosks</span><strong id="activeKiosks">—</strong></div><div><span data-i18n="onlineNow">Online now</span><strong id="onlineKiosks">—</strong></div></div><p class="small muted" data-i18n="heartbeatNote">Online status depends on kiosk heartbeat updates.</p></section>
+        </div>
+        <section class="panel recent-panel"><div class="panel-heading"><div><h2 data-i18n="recentJobs">Recent print jobs</h2><p class="muted" data-i18n="recentCaption">Latest jobs returned by the API.</p></div><span class="small muted">Latest 10</span></div><div class="table-wrap"><table><thead><tr><th data-i18n="jobId">Job ID</th><th data-i18n="created">Created</th><th data-i18n="kiosk">Kiosk</th><th data-i18n="pages">Pages</th><th data-i18n="amount">Amount</th><th data-i18n="payment">Payment</th><th data-i18n="status">Status</th></tr></thead><tbody id="recentJobs"><tr><td colspan="7">Loading…</td></tr></tbody></table></div></section>
+      </div>
+    </section>
+
+    <section id="view-admins" class="view-section" hidden>
+      <div class="page-toolbar"><div><h2 data-i18n="adminDirectory">Admin directory</h2><p class="muted" data-i18n="adminDirectoryCaption">Create regular admins and review their access.</p></div><button id="addAdminButton" class="primary-button compact-button"><span>＋</span><span data-i18n="addAdmin">Add admin</span></button></div>
+      <div class="filter-row"><label class="search-field"><span>⌕</span><input id="adminSearch" type="search" placeholder="Search by name or email" data-i18n-placeholder="searchAdmins"></label><button id="reloadAdmins" class="secondary-button" data-i18n="reloadList">Reload list</button></div>
+      <div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th data-i18n="admin">Admin</th><th data-i18n="email">Email</th><th data-i18n="role">Role</th><th data-i18n="accountStatus">Account status</th></tr></thead><tbody id="adminsTable"><tr><td colspan="4">Loading admins…</td></tr></tbody></table></div><div id="adminsEmpty" class="empty-state" hidden><span>♙</span><strong data-i18n="noAdmins">No regular admins found</strong><p data-i18n="noAdminsCaption">Create an admin to begin assigning kiosks.</p></div></div>
+    </section>
+
+    <section id="view-kiosks" class="view-section" hidden>
+      <div class="page-toolbar"><div><h2 data-i18n="kioskDirectory">Kiosk directory</h2><p class="muted" data-i18n="kioskDirectoryCaption">Review registered PayPrint devices.</p></div><div style="display:flex;gap:10px;flex-wrap:wrap"><button id="addKioskButton" type="button" class="primary-button compact-button">+ Add kiosk</button><button id="reloadKiosks" class="secondary-button" data-i18n="reloadList">Reload list</button></div></div>
+      <label class="search-field kiosk-search"><span>⌕</span><input id="kioskSearch" type="search" placeholder="Search kiosk name, ID or location" data-i18n-placeholder="searchKiosks"></label>
+      <div id="kioskGrid" class="kiosk-grid"></div><div id="kiosksEmpty" class="empty-state panel" hidden><span>▣</span><strong data-i18n="noKiosks">No kiosks found</strong><p data-i18n="noKiosksCaption">Registered kiosks will appear here.</p></div>
+    </section>
+
+    <section id="view-assignments" class="view-section" hidden>
+      <div class="page-toolbar"><div><h2 data-i18n="assignmentTitle">Kiosk assignments</h2><p class="muted" data-i18n="assignmentCaption">Control which regular admin can access each kiosk.</p></div><button id="addAssignmentButton" class="primary-button compact-button"><span>＋</span><span data-i18n="assignKiosk">Assign kiosk</span></button></div>
+      <div class="assignment-summary"><div class="summary-icon">⛓</div><div><strong id="assignmentCount">—</strong><span data-i18n="activeAssignments">Active assignments</span></div><p data-i18n="assignmentSecurity">Only Super Admins can change assignments.</p></div>
+      <div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th data-i18n="admin">Admin</th><th data-i18n="kiosk">Kiosk</th><th data-i18n="kioskCode">Kiosk code</th><th data-i18n="action">Action</th></tr></thead><tbody id="assignmentsTable"><tr><td colspan="4">Loading assignments…</td></tr></tbody></table></div><div id="assignmentsEmpty" class="empty-state" hidden><span>⛓</span><strong data-i18n="noAssignments">No assignments yet</strong><p data-i18n="noAssignmentsCaption">Assign a kiosk to a regular admin to set their access scope.</p></div></div>
+    </section>
+    <footer class="footer"><span>PayPrint Admin Workspace</span><span>•</span><span data-i18n="footerSecurity">Role-based access · Secure API session</span><span class="footer-spacer"></span><span id="footerApi">API · 127.0.0.1:8000</span></footer>
+  </main>
+
+  <dialog id="adminDialog" class="modal">
+    <form id="adminCreateForm" method="dialog">
+      <div class="modal-heading"><div><p class="eyebrow" data-i18n="newAdmin">NEW ADMIN</p><h2 data-i18n="createRegularAdmin">Create regular admin</h2><p class="muted" data-i18n="createAdminCaption">A new admin can only access kiosks assigned to them.</p></div><button type="button" class="icon-button" data-close="adminDialog" aria-label="Close">×</button></div>
+      <label for="newAdminName" data-i18n="fullName">Full name</label><input id="newAdminName" name="name" required minlength="2" maxlength="100" autocomplete="name" placeholder="e.g. Aditi Sharma">
+      <label for="newAdminEmail" data-i18n="emailLabel">Email address</label><input id="newAdminEmail" name="email" type="email" required maxlength="255" autocomplete="email" placeholder="admin@example.com">
+      <label for="newAdminPassword" data-i18n="temporaryPassword">Temporary password</label><input id="newAdminPassword" name="password" type="password" required minlength="8" maxlength="128" autocomplete="new-password" placeholder="At least 8 characters">
+      <p class="form-hint" data-i18n="passwordHint">Share credentials securely and ask the admin to change their password if your backend supports it.</p>
+      <p class="error-message" id="adminFormError" role="alert"></p>
+      <div class="modal-actions"><button type="button" class="secondary-button" data-close="adminDialog" data-i18n="cancel">Cancel</button><button type="submit" id="saveAdminButton" class="primary-button"><span data-i18n="createAdmin">Create admin</span><span>→</span></button></div>
+    </form>
+  </dialog>
+
+  <dialog id="assignmentDialog" class="modal">
+    <form id="assignmentForm" method="dialog">
+      <div class="modal-heading"><div><p class="eyebrow" data-i18n="accessControl">ACCESS CONTROL</p><h2 data-i18n="assignKioskTitle">Assign a kiosk</h2><p class="muted" data-i18n="assignKioskCaption">Choose a regular admin and a kiosk by its internal database ID.</p></div><button type="button" class="icon-button" data-close="assignmentDialog" aria-label="Close">×</button></div>
+      <label for="assignmentAdmin" data-i18n="regularAdmin">Regular admin</label><select id="assignmentAdmin" required><option value="">Select an admin</option></select>
+      <label for="assignmentKiosk" data-i18n="kiosk">Kiosk</label><select id="assignmentKiosk" required><option value="">Select a kiosk</option></select>
+      <p class="form-hint" data-i18n="kioskIdHint">The assignment API expects the kiosk's internal numeric ID, not the public kiosk code.</p>
+      <p class="error-message" id="assignmentFormError" role="alert"></p>
+      <div class="modal-actions"><button type="button" class="secondary-button" data-close="assignmentDialog" data-i18n="cancel">Cancel</button><button type="submit" id="saveAssignmentButton" class="primary-button"><span data-i18n="saveAssignment">Save assignment</span><span>→</span></button></div>
+    </form>
+  </dialog>
+
+  <dialog id="kioskDialog" class="modal">
+    <form id="kioskCreateForm" method="dialog">
+      <div class="modal-heading">
+        <div>
+          <p class="eyebrow">DEVICE REGISTRATION</p>
+          <h2>Register a PayPrint kiosk</h2>
+          <p class="muted">Register the device before configuring its print agent.</p>
+        </div>
+        <button type="button" class="icon-button" data-close="kioskDialog" aria-label="Close">×</button>
+      </div>
+
+      <div id="kioskFields">
+        <label for="newKioskId">Kiosk ID / public code</label>
+        <input id="newKioskId" name="kiosk_id" required minlength="2" maxlength="100" placeholder="e.g. PP-CAMPUS-001">
+
+        <label for="newKioskName">Kiosk name</label>
+        <input id="newKioskName" name="name" required minlength="2" maxlength="100" placeholder="e.g. Library Print Kiosk">
+
+        <label for="newKioskLocation">Location</label>
+        <input id="newKioskLocation" name="location" maxlength="255" placeholder="e.g. College library">
+
+        <p class="form-hint">Keep the Kiosk ID unique. You will need the generated secret to configure kiosk authentication.</p>
+      </div>
+
+      <p id="kioskFormError" class="error-message" role="alert"></p>
+
+      <div id="kioskSecretResult" hidden>
+        <h3>Kiosk registered successfully</h3>
+        <p class="form-hint">Copy and store this secret securely now. It will not be shown again by this form.</p>
+        <label for="kioskSecretValue">Kiosk secret</label>
+        <input id="kioskSecretValue" type="text" readonly autocomplete="off">
+        <button id="copyKioskSecret" type="button" class="secondary-button">Copy secret</button>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="secondary-button" data-close="kioskDialog">Close</button>
+        <button type="submit" id="saveKioskButton" class="primary-button">Register kiosk →</button>
+      </div>
+    </form>
+  </dialog>
+  <dialog id="confirmDialog" class="modal confirm-modal">
+    <form id="confirmForm" method="dialog"><div class="confirm-icon">!</div><h2 data-i18n="removeAssignment">Remove assignment?</h2><p class="muted" data-i18n="removeAssignmentCaption">This removes this admin's assignment to the selected kiosk. It does not delete the admin or kiosk.</p><p class="error-message" id="confirmError" role="alert"></p><div class="modal-actions"><button type="button" class="secondary-button" data-close="confirmDialog" data-i18n="cancel">Cancel</button><button type="submit" id="confirmRemoveButton" class="danger-button" data-i18n="remove">Remove</button></div></form>
+  </dialog>
+
+  <aside class="voice-panel" id="voicePanel" hidden aria-live="polite"><div class="voice-panel-head"><span class="voice-pulse">◖</span><div><strong data-i18n="voiceAssistant">Voice assistant</strong><small id="voiceStatus" data-i18n="voiceReady">Ready to help</small></div><button id="closeVoice" class="icon-button" aria-label="Close">×</button></div><p id="voiceMessage" data-i18n="voiceIntro">You can ask for help with admins, kiosks or assignments. Browser voice support varies.</p><div class="voice-actions"><button id="speakSummary" class="secondary-button" type="button" data-i18n="readSummary">Read page summary</button><button id="listenCommand" class="primary-button" type="button" data-i18n="listen">Listen</button></div></aside>
+  <script src="admin.js"></script>
+</body>
+</html>

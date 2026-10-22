@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PayPrint | Customer Printing</title><link rel="stylesheet" href="css/style.css">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script></head>
+<body>
+<header><a class="brand" href="#"><b>P</b> PayPrint</a><div><span class="secure">● Secure print session</span> <button id="lang">हिन्दी</button></div></header>
+<main>
+<section class="hero"><div><p class="eyebrow">SELF-SERVICE PRINTING</p><h1>Your documents.<br>Printed simply.</h1><p class="muted">Upload a PDF, choose print settings, pay securely, and collect your pages.</p><p class="trust">✓ No account needed &nbsp; ✓ PDF up to 10 MB</p></div><div class="art"><div class="sheet"><b>P</b><hr><hr><div></div><hr><hr><small>PAYPRINT</small></div><span class="chip">Ready when you are ↗</span></div></section>
+<div id="notice" class="notice hidden" role="status"></div>
+<div class="steps"><span data-step="1" class="active">1 Details</span><span data-step="2">2 Upload PDF</span><span data-step="3">3 Print settings</span><span data-step="4">4 Payment</span></div>
+<section id="details" class="card"><p class="eyebrow">STEP 01</p><h2>Let's get started</h2><p class="muted">Create a temporary session for this kiosk.</p>
+<form id="sessionForm" class="grid"><label>Your name<input id="name" maxlength="100" required placeholder="e.g. Utkarsh"></label><label>Kiosk ID<input id="kiosk" maxlength="100" value="999" required></label><button class="primary">Start printing →</button></form><small class="muted">Session expires after 30 minutes.</small></section>
+<section id="upload" class="card locked"><p class="eyebrow">STEP 02</p><h2>Upload your PDF</h2><p class="muted">Password-protected PDFs are not supported.</p>
+<form id="uploadForm"><label class="drop"><strong id="fileName">＋ Choose a PDF to upload</strong><span id="fileInfo">PDF only · Maximum 10 MB</span><input id="file" type="file" accept=".pdf,application/pdf" required></label><button id="uploadBtn" class="primary" disabled>Upload PDF →</button></form><p id="uploadResult" class="success hidden"></p></section>
+<section id="settings" class="card locked"><p class="eyebrow">STEP 03</p><h2>Choose print settings</h2><div class="doc"><b>PDF</b><div><strong id="docName">Your document</strong><small id="pages">— pages</small></div></div>
+<form id="jobForm"><div class="options"><fieldset><legend>Paper size</legend><label><input type="radio" name="paper_size" value="A4" checked>A4</label><label><input type="radio" name="paper_size" value="A3">A3</label><label><input type="radio" name="paper_size" value="LETTER">Letter</label></fieldset><fieldset><legend>Print mode</legend><label><input type="radio" name="print_mode" value="bw" checked>Black & white</label><label><input type="radio" name="print_mode" value="color">Colour</label></fieldset></div>
+<label class="copies">Number of copies<select id="copies"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></label><button id="jobBtn" class="primary">Calculate total →</button></form>
+<div id="bill" class="bill hidden"><p>Pages to print <b id="billPages">—</b></p><p>Total amount <strong id="amount">₹—</strong></p><button id="pay" class="primary">Continue to payment →</button><small>Final price and stock are checked by the server.</small></div></section>
+<section id="status" class="card locked"><p class="eyebrow">YOUR PRINT JOB</p><h2 id="statusTitle">Print status</h2><div id="statusContent" class="muted">After payment is verified, confirmation appears here.</div></section>
+<footer><b>PayPrint</b><span>Print only what you need. Avoid uploading sensitive documents on a shared device.</span></footer>
+</main><script src="js/app.js"></script></body></html>

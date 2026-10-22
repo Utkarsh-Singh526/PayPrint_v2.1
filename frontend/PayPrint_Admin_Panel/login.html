@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b6e69">
+  <title>PayPrint | Secure Admin Sign In</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="login-page">
+  <main class="login-layout">
+    <section class="brand-panel">
+      <div class="brand"><span class="brand-mark">P</span><span>PayPrint</span><span class="brand-tag">CONTROL CENTER</span></div>
+      <div class="brand-copy">
+        <p class="eyebrow">PRINT NETWORK MANAGEMENT</p>
+        <h1>Run your print network with clarity.</h1>
+        <p class="brand-description">A single workspace to monitor operations, manage administrators and assign kiosks securely.</p>
+        <div class="feature-chips"><span>◈ Live operations</span><span>⌘ Kiosk control</span><span>◉ Role-based access</span></div>
+      </div>
+      <p class="small brand-foot">PayPrint Admin · Authorized access only</p>
+      <div class="brand-orb orb-one"></div><div class="brand-orb orb-two"></div>
+    </section>
+    <section class="login-panel">
+      <div class="login-card">
+        <div class="login-topline"><span class="eyebrow">WELCOME BACK</span><button class="icon-button" id="langButton" type="button" aria-label="Change language">हिन्दी</button></div>
+        <div class="login-logo"><span class="brand-mark">P</span></div>
+        <h2 data-i18n="signInTitle">Sign in to your workspace</h2>
+        <p class="muted" data-i18n="signInSubtitle">Use your PayPrint administrator credentials to continue.</p>
+        <form id="loginForm">
+          <label for="email" data-i18n="emailLabel">Email address</label>
+          <input id="email" name="email" type="email" autocomplete="username" required placeholder="admin@example.com">
+          <label for="password" data-i18n="passwordLabel">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="Enter your password">
+          <button class="primary-button" id="loginButton" type="submit"><span data-i18n="signIn">Sign in</span><span aria-hidden="true">→</span></button>
+          <p id="loginError" class="error-message" role="alert"></p>
+        </form>
+        <div class="login-security"><span class="security-icon">✓</span><span data-i18n="secureNote">Protected access. Your permissions depend on your administrator role.</span></div>
+        <p class="small muted login-help">If sign-in fails, confirm that the FastAPI server is running and your account is active.</p>
+      </div>
+    </section>
+  </main>
+  <script src="admin.js"></script>
+</body>
+</html>

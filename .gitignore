@@ -1,0 +1,65 @@
+﻿.env
+.env.*
+!.env.example
+venv/
+.venv/
+venvcopilot-debug/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+node_modules/
+storage/
+uploads/
+*.db
+*.sqlite
+*.sqlite3
+
+# Local environments and generated files
+**/venv/
+**/.venv/
+**/venvcopilot-debug/
+**/__pycache__/
+**/node_modules/
+*.py[cod]
+.pytest_cache/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Runtime data and logs
+**/storage/
+**/uploads/
+**/logs/
+*.db
+*.sqlite
+*.sqlite3
+
+# Backups and local audit artifacts
+backups/
+backup_*/
+*.bak
+*.bak_*
+*.backup-*
+payprint_test.pdf
+payprint_source_dump.txt
+reservation_source.txt
+payprint_audit_report.txt
+
+# Additional local-only files
+**/.env
+**/.env.*
+!**/.env.example
+**/venv/
+**/.venv/
+**/node_modules/
+**/__pycache__/
+**/logs/
+**/storage/
+**/uploads/
+**/backups/
+**/backup_*/
+*.backup-*
+*.bak
+*.bak_*
